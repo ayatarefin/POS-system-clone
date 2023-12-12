@@ -1,0 +1,76 @@
+/* The switch - the box around the slider */
+.switch {
+position: relative;
+display: inline-block;
+width: 60px;
+height: 28px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+opacity: 0;
+width: 0;
+height: 0;
+}
+
+/* The slider */
+.slider {
+position: absolute;
+cursor: pointer;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background-color: gray;
+-webkit-transition: .2s;
+transition: .2s;
+}
+
+.slider:before {
+position: absolute;
+content: "";
+height: 20px;
+width: 20px;
+left: 4px;
+right: 4px;
+top: 4px;
+bottom: 4px;
+background-color: #ffffff;
+-webkit-transition: .2s;
+transition: .2s;
+}
+
+input:checked + .slider {
+background-color: #3bb54b;
+}
+
+input:focus + .slider {
+box-shadow: 0 0 1px #3bb54b;
+}
+
+input:checked + .slider:before {
+-webkit-transform: translateX(32px);
+-ms-transform: translateX(32px);
+transform: translateX(32px);
+}
+
+.card-body h2{
+    font-size: 300%;
+}
+
+.card-body h2{
+    font-size: 250%;
+}
+
+.m-20 {
+    margin-right: 20px;
+    padding: 20%;
+}
+
+.footer {
+    background: none;
+    position: static;
+    vertical-align: bottom;
+    align-content: center;
+    bottom: 15px;
+}
