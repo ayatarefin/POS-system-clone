@@ -1,34 +1,42 @@
-$(document).ready(function(){
-    if($("#successid").val()==200){
-        loginSuccess();
-    }else if($("#successid").val()==401){
-        actionFailed();
-    }else{
+// This block of code executes when the document is ready
 
+$(document).ready(function(){
+    // Check the value of the element with id "successid"
+    if ($("#successid").val() == 200) {
+        // Call the loginSuccess function if the value is 200
+        loginSuccess();
+    } else if ($("#successid").val() == 401) {
+        // Call the actionFailed function if the value is 401
+        actionFailed();
+    } else {
+        // Do nothing if the value is neither 200 nor 401
     }
 
+    // Call the dailySaleChart function
     dailySaleChart();
+});
 
-});
-//success function
+// Function to display success message
 loginSuccess = () => {
-$.toastr.success('Success.', {
-    time: 6000,
-    position:'top-right',
-    size:'',
-    callback:function () {}
-});
+    $.toastr.success('Success.', {
+        time: 6000,
+        position:'top-right',
+        size:'',
+        callback:function () {}
+    });
 }
-//error function
+
+// Function to display error message
 actionFailed = () => {
-$.toastr.error('Credentials Mismatch !', {
-    time: 6000,
-    position:'top-right',
-    size:'',
-    callback:function () {}
-});
+    $.toastr.error('Credentials Mismatch !', {
+        time: 6000,
+        position:'top-right',
+        size:'',
+        callback:function () {}
+    });
 }
-//validation error function
+
+// Function to display validation error message
 actionError = (key) => {
     $.toastr.error(key+' Required !', {
         time: 4000,
@@ -37,26 +45,30 @@ actionError = (key) => {
         callback:function () {}
     });
 }
-//search current stock
+
+// Function to search current stock
 searchCurrentStock = () => {
+    // Extract values from input fields
     var datetime = $("input[name='datetime']").val();
     var todatetime = $("input[name='todatetime']").val();
     var outletName = $("select[name='outletName']").val();
     var itemName = $("select[name='itemName']").val();
-    //validation
-    if(datetime == null){
+
+    // Validation checks
+    if (datetime == null) {
         actionError('From Date');
         return;
     }
-    if(todatetime < datetime){
+    if (todatetime < datetime) {
         actionError('Valid Date');
         return;
     }
-    if(outletName == null){
+    if (outletName == null) {
         actionError('Outlet');
         return;
     }
-    //call ajax
+
+    // Ajax call to search for stock
     $.ajax({
         type:'GET',
         url:'/search-stock',
@@ -114,17 +126,21 @@ searchCurrentStock = () => {
 
     });
 }
-//alert message search
+
+// Function to display alert messages for search
 searchAlertMessage = () => {
+    // Extract values from input fields
     var datetime = $("input[name='datetime']").val();
     var outletName = $("select[name='outletName']").val();
     var itemName = $("select[name='itemName']").val();
-    //validation
+
+    // Validation check
     if(datetime == null){
         actionError('Date');
         return;
     }
-    // call ajax
+
+    // Ajax call to search for alert messages
     $.ajax({
         type:'GET',
         url:'/search-message',
@@ -158,10 +174,13 @@ searchAlertMessage = () => {
 
     });
 }
-//add alert receiver
+
+// Event listener for the form with id "addAlertReceiver"
 $("#addAlertReceiver").on('submit',function(e){
     e.preventDefault();
     var form = $("#addAlertReceiver");
+
+    // Ajax call to store alert receiver
     $.ajax({
         type:'POST',
         url:'/store/alert-receiver',
@@ -185,8 +204,11 @@ $("#addAlertReceiver").on('submit',function(e){
         }
     });
 });
-//open modal
+
+// Function to open modal for editing alert receiver
 openReceiverEditModal = (id) => {
+
+    // Ajax call to get data for editing
     $.ajax({
         type:'POST',
         url:'/edit/alert-receiver',
@@ -224,15 +246,18 @@ openReceiverEditModal = (id) => {
     });
 
 }
-// close modal
+
+// Function to close the modal
 recModalClose = () => {
     $("#exampleModalCenter").modal('hide');
 }
 
-//add alert receiver
+// Event listener for the form with id "editAlertReceiver"
 $("#editAlertReceiver").on('submit',function(e){
     e.preventDefault();
     var form = $("#editAlertReceiver");
+
+    // Ajax call to edit and store alert receiver
     $.ajax({
         type:'POST',
         url:'/edit-store/alert-receiver',
@@ -259,7 +284,8 @@ $("#editAlertReceiver").on('submit',function(e){
         }
     });
 });
-//for alert configurations
+
+// Function to manage alert message configurations
 manageAlertMessage = (id) => {
 
     //data check box value control
@@ -275,7 +301,7 @@ manageAlertMessage = (id) => {
     var qty = $("#cutoff_qty"+id).val();
 
 
-    //ajax function
+    // Ajax call to update message options
     $.ajax({
         url:"/update/message-option",
         type:"get",
@@ -314,8 +340,10 @@ manageAlertMessage = (id) => {
 
     });
 }
+
+// Functions to disable alert receivers
 alertRecieverDisable = (id) => {
-    //ajax function
+    // Ajax call to disable alert receiver
     $.ajax({
         url:"/alert/receiver-disable",
         type:"get",
@@ -345,8 +373,11 @@ alertRecieverDisable = (id) => {
 
     });
 }
+
+// Functions to enable alert receivers
 alertRecieverEnable = (id) => {
-    //ajax function
+
+    // Ajax call to enable alert receiver
     $.ajax({
         url:"/alert/receiver-enable",
         type:"get",
@@ -376,6 +407,8 @@ alertRecieverEnable = (id) => {
 
     });
 }
+
+// Function to make periodic Ajax call for SMS alerts
 function ajaxCallForSMS() {
     $.ajax({
     url:"/api/store-alert",
@@ -391,7 +424,9 @@ function ajaxCallForSMS() {
         setTimeout(ajaxCallForSMS, 60000); // 6 sec
     });
 }
-ajaxCallForSMS();
+ajaxCallForSMS(); // Initial call
+
+// Function to make another periodic Ajax call for SMS alerts
 function ajaxCallForSMSStore() {
     $.ajax({
     url:"/api/store-alert2",
@@ -407,7 +442,8 @@ function ajaxCallForSMSStore() {
         setTimeout(ajaxCallForSMSStore, 60000); // 6 sec
     });
 }
-ajaxCallForSMSStore();
+
+ajaxCallForSMSStore(); // Initial call
 //send message function call//
 // function itemQuantityFromApi(){
 //     $.ajax({
