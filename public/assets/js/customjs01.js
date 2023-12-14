@@ -461,3 +461,19 @@ ajaxCallForSMSStore(); // Initial call
 //     })
 // }
 // itemQuantityFromApi();
+
+
+// Refresh the page
+setTimeout(function () {
+    location.reload();
+}, 3600000);
+
+//keep-alive.js
+
+// setInterval(function () {
+    // AJAX request to keep alive in browser
+//     fetch('/keep-alive')
+//         .then(response => response.json())
+//         .then(data => console.log('Server response:', data))
+//         .catch(error => console.error('Error:', error));
+// }, 70000); // Refresh every 1 minute (adjust as needed)

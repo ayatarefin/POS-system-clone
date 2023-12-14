@@ -35,3 +35,7 @@ Route::get('/logout', function () {
 //current stock
 Route::get('/search-stock', [StockReportController::class, 'searchStock'])->middleware(['auth',CheckSessionExpiration::class]);
 Route::get('/stock-reports', [StockReportController::class, 'currentStock'])->name('currentStock')->middleware(['auth',CheckSessionExpiration::class]);
+
+
+//keepAlive
+// Route::get('/keep-alive', [StockReportController::class,'keepAlive']);

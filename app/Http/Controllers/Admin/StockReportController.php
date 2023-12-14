@@ -19,21 +19,19 @@ class StockReportController extends Controller
     }
     function searchStock(Request $request){
         $arrayData = [];
-        $stockArrItem = [];
-        if(isset($request->datetime) && isset($request->todatetime) && isset($request->outlet)){
-            $stockArrItem = StockRecord::where('outlet_name','LIKE','%'.$request->outlet.'%')
-                ->whereBetween('date',[$request->datetime,$request->todatetime])
-                ->orderBy('id','DESC')->get();
+
+        $query = StockRecord::where('outlet_name', 'LIKE', '%' . $request->outlet . '%')
+            ->whereBetween('date', [$request->datetime, $request->todatetime]);
+
+        if(isset($request->item)){
+            $query->where('item_name', 'LIKE', '%' . $request->item . '%');
         }
-        if(isset($request->datetime) && isset($request->todatetime) && isset($request->outlet) && isset($request->item)){
-            $stockArrItem = StockRecord::where('outlet_name','LIKE','%'.$request->outlet.'%')
-                ->where('item_name','LIKE','%'.$request->item.'%')
-                ->whereBetween('date',[$request->datetime,$request->todatetime])
-                ->orderBy('id','DESC')->get();
-        }
+
+        $stockArrItem = $query->orderBy('id', 'DESC')->get();
+
         foreach($stockArrItem as $data){
             $arrayData[] = [
-                'id' => $data->id,
+                // 'id' => $data->id,
                 'outlet' => $data->outlet_name,
                 'item' => $data->item_name,
                 'stock' => $data->stock_receive_qty,
@@ -41,10 +39,16 @@ class StockReportController extends Controller
                 'date' => $data->date,
             ];
         }
+
         return response()->json([
-            'status'=>$request->outlet,
+            'status' => $request->outlet,
             'datas' => $arrayData
         ]);
-
     }
+
+    // function keepAlive()
+    // {
+        //updating the session timestamp
+    //     return response()->json(['status' => 'success']);
+    // }
 }
