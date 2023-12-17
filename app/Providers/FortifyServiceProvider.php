@@ -39,6 +39,11 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
+        // Custom Registration fortify
+        Fortify::registerView(function () {
+                    return view('auth.register');
+        });
+
         Fortify::authenticateUsing(function (Request $request) {
             $credentials = $request->only('email', 'password');
             $roles = DB::table('users')

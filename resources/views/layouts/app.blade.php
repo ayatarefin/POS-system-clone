@@ -16,8 +16,18 @@
 
         @guest
         @else
-            @include('layouts.partial.navigation')
-                @include('layouts.partial.header')
+            @include('layouts.partial.header')
+            {{-- for admin login--}}
+            @auth
+                @if (auth()->user()->admin_role == 'Admin')
+                    {{--admin Navigation--}}
+                    @include('layouts.partial.admin_navigation')
+                @else
+                    {{--regular navigation--}}
+                    @include('layouts.partial.navigation')
+                @endif
+            @endauth
+
         @endguest
 
         @yield('content')
