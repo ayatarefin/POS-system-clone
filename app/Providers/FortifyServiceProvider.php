@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
+use DB;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -23,7 +24,8 @@ class FortifyServiceProvider extends ServiceProvider
     {
         // custom login fortify
         Fortify::loginView(function () {
-            return view('auth.login');
+            $roles = DB::table('users_role')->get();
+            return view('auth.login', ['roles' => $roles]);
         });
     }
 
@@ -39,20 +41,23 @@ class FortifyServiceProvider extends ServiceProvider
 
         Fortify::authenticateUsing(function (Request $request) {
             $credentials = $request->only('email', 'password');
+            $roles = DB::table('users')
+                ->join('users_role', 'users.admin_role', '=', 'users_role.role_name')
+                ->where('users_role.role_name', $request->input('role')) // 'role' is the name of the role field
+                ->select('users.*', 'users_role.role_name')
+                ->first();
 
             if (Auth::once($credentials)) {
                 $user = Auth::user();
 
-                if ($user->admin_key == '9y$10/KcQvrB8AI3avTA') {
+                if ($user->admin_key == '9y$10/KcQvrB8AI3avTA' && $roles && $user->admin_role == $roles->role_name) {
                     session()->flash('success', '200');
                     return $user; // Return the authenticated user
-                }
-                else {
+                } else {
                     Auth::logout(); // Log out if not an admin
                     session()->flash('error', '401');
                 }
-            }
-            else {
+            } else {
                 session()->flash('error', '401');
             }
             session()->flash('error', '401');

@@ -46,6 +46,14 @@
                                     <input type="password" name="password" class="form-control"
                                         id="exampleInputPassword" required>
                                 </div>
+                                <div class="mb-4">
+                                    <label for="role" class="form-label">Role</label>
+                                    <select class="form-control" name="role" placeholder="Role" required>
+                                        @foreach ($roles as $row)
+                                            <option value="{{ $row->role_name }}">{{ $row->role_name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                 <div class="d-flex align-items-center justify-content-between mb-4">
                                     <div class="form-check">
                                         <input class="form-check-input primary" type="checkbox" value=""
