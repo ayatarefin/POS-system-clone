@@ -176,9 +176,9 @@ searchAlertMessage = () => {
 }
 
 // Event listener for the form with id "addAlertReceiver"
-$("#addAlertReceiver").on('submit',function(e){
+$("#addNewUser").on('submit',function(e){
     e.preventDefault();
-    var form = $("#addAlertReceiver");
+    var form = $("#addNewUser");
 
     // Ajax call to store alert receiver
     $.ajax({
