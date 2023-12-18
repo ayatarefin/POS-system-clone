@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\StockReportController;
+use App\Http\Controllers\Auth\CreateAccountController;
 use App\Http\Middleware\CheckSessionExpiration;
 
 /*
@@ -39,3 +40,7 @@ Route::get('/stock-reports', [StockReportController::class, 'currentStock'])->na
 
 //keepAlive
 // Route::get('/keep-alive', [StockReportController::class,'keepAlive']);
+
+//Create Account
+Route::get('/users/create', [CreateAccountController::class, 'create'])->name('users.create');
+Route::post('/users', [CreateAccountController::class, 'store'])->name('users.store');

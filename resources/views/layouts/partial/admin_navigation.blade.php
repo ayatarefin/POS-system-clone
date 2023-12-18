@@ -68,7 +68,7 @@
             </li>
 
             <li class="sidebar-item">
-                <a class="sidebar-link" href="{{route('register')}}" aria-expanded="false">
+                <a class="sidebar-link" href="{{route('users.create')}}" aria-expanded="false">
                     <span>
                         <i class="ti ti-id-badge"></i>
                     </span>
