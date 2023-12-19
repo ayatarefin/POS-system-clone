@@ -42,5 +42,10 @@ Route::get('/stock-reports', [StockReportController::class, 'currentStock'])->na
 // Route::get('/keep-alive', [StockReportController::class,'keepAlive']);
 
 //Create Account
-Route::get('/users/create', [CreateAccountController::class, 'create'])->name('users.create');
-Route::post('/users', [CreateAccountController::class, 'store'])->name('users.store');
+Route::post('/users-create',[CreateAccountController::class,'create'])->name('users.create');
+Route::post('/users-store', [CreateAccountController::class, 'store'])->name('users.store');
+Route::get('/users-index',[CreateAccountController::class,'index'])->name('users.index');
+
+    Route::post('/edit/alert-receiver',[CreateAccountController::class,'editAlertReceiver']);
+    Route::post('/edit-store/alert-receiver',[CreateAccountController::class,'editStoreAlertReceiver']);
+    Route::post('/reciever-delete/{id}',[CreateAccountController::class,'deleteAlertReciver']);

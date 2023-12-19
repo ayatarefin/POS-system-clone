@@ -68,11 +68,11 @@
             </li>
 
             <li class="sidebar-item">
-                <a class="sidebar-link" href="{{route('users.create')}}" aria-expanded="false">
+                <a class="sidebar-link" href="{{route('users.index')}}" aria-expanded="false">
                     <span>
                         <i class="ti ti-id-badge"></i>
                     </span>
-                    <span class="hide-menu">Create User</span>
+                    <span class="hide-menu">See User</span>
                 </a>
             </li>
 

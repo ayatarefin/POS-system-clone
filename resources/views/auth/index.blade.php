@@ -26,37 +26,38 @@
                                             <label for=""> SL </label>
                                         </th>
 
-                                        <th width="30%">
+                                        <th width="20%">
                                             <label for=""> User  </label>
                                         </th>
                                         </th>
                                         <th width="30%">
+                                            <label for=""> Email </label>
+                                        </th>
+                                        <th width="20%">
                                             <label for=""> Status </label>
                                         </th>
-                                        <th width="35%">
+                                        <th width="25%">
                                             <label for=""> Action </label>
                                         </th>
                                     </tr>
                                 </thead>
 
-                                {{-- <tbody>
+                                <tbody>
                                     @php $count = 1; @endphp
-                                    @foreach($receivers as $data)
+                                    @foreach($users as $data)
                                     <tr>
                                         <td>{{$count++}}</td>
                                         <td>{{$data->name}}</td>
-                                        <td>{{$data->number}}</td>
-
-                                        <td>{{$data->outlet==''?'N/A':$data->outlet}}</td>
-                                        @if($data->status == 1)
-                                        <td>
+                                        <td>{{$data->email}}</td>
+                                        <td>{{$data->admin_role}}</td>
+                                        {{-- <td>
                                             <label class="switch">
                                                 <input type="checkbox" checked
                                                     onclick="alertRecieverDisable({{$data->id}})" />
                                                 <span class="slider"></span>
                                             </label>
-                                        </td>
-                                        @else
+                                        </td> --}}
+                                        {{-- @else
                                         <td>
                                             <label class="switch">
                                                 <input type="checkbox" onclick="alertRecieverEnable({{$data->id}})">
@@ -64,23 +65,23 @@
                                             </label>
                                         </td>
                                         @endif
-                                        <td> --}}
-                                            {{-- <!-- <button type="button" class="btn btn-sm btn-primary" onclick="openReceiverEditModal({{$data->id}})"> Edit </button> --> --}}
-                                            {{-- <form action="{{url('/')}}/reciever-delete/{{$data->id}}" method="post">
+                                        <td>
+                                            <button type="button" class="btn btn-sm btn-primary" onclick="openReceiverEditModal({{$data->id}})"> Edit </button>
+                                            <form action="{{url('/')}}/reciever-delete/{{$data->id}}" method="post">
                                                 @csrf
                                                 <button class="btn btn-sm btn-danger" type="submit"
                                                     onclick="return confirm('Are you sure to delete it ?')"> Delete
                                                 </button>
                                             </form>
 
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                     @endforeach
-                                </tbody> --}}
+                                </tbody>
                             </table>
 
                             <!-- Modal for edit alert recipient -->
-                            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                            {{-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
@@ -121,7 +122,7 @@
                                         </form>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <!-- End: Modal for edit alert recipient -->
 
 
@@ -141,31 +142,26 @@
 
                                         <form id="addNewUser">
                                             <div class="modal-body text-center">
-                                                {{-- <select class="form-select mb-4" name="outlet" id="outlet" required>
-                                                    @php $outlets = DB::table('outlets')->get(); @endphp
-                                                    <option value="" selected disabled>Select Outlet</option>
-                                                    @foreach($outlets as $data)
-                                                    <option value="{{$data->outlet_name}}">{{$data->outlet_name}}
-                                                    </option>
-                                                    @endforeach
-                                                </select> --}}
                                                 <input class="form-control mb-4" type="text" name="name"
-                                                    placeholder="Name" required>
-                                                <input class="form-control mb-4" type="text" name="number"
-                                                    placeholder="Hotline Number" pattern="[0-9]+" title="Only numbers"
-                                                    required>
-                                                <select class="form-select mb-4" name="status" id="status" required>
-                                                    <option value="" selected disabled>Select</option>
-                                                    <option value="1">Enable</option>
-                                                    <option value="0">Disable</option>
+                                                    placeholder="Full Name" required>
+                                                <input class="form-control mb-4" type="email" name="email"
+                                                    placeholder="email" aria-describedby="emailHelp" required>
+                                                <input class="form-control mb-4" type="password" name="password"
+                                                    placeholder="Set Password" required>
+                                                <input class="form-control mb-4" type="text" name="admin_key"
+                                                    placeholder="Admin Key" required>
+                                                <select class="form-select mb-4" name="role" placeholder="User Role" required>
+                                                    @foreach ($roles as $row)
+                                                        <option value="{{ $row->role_name }}">{{ $row->role_name}}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-warning close-modal"
                                                     data-dismiss="modal">Cancel</button>
                                                 <input type="submit" value="Save"
-                                                    class="btn btn-success addreceiver-submit-btn" />
-                                                <button class="btn btn-success display-add-receiver"
+                                                    class="btn btn-success adduser-submit-btn" />
+                                                <button class="btn btn-success display-add-user"
                                                     style="display:none">
                                                     <i class="fa fa-refresh fa-spin "></i>Loading
                                                 </button>
