@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
+use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -16,34 +16,27 @@ class CreateAccountController extends Controller
         return view('auth.index',compact('users'),['roles' => $roles]);
     }
     public function store(Request $request)
-{
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|unique:users|max:255',
-        'password' => 'required|string|min:8',
-        'role' => 'required|in:Admin,Analyst,Manager', // Adjust the roles as needed
-        'admin_key' => 'required', // Add this line if admin_key is required
-    ]);
+    {
+        $request->validate($this->rules());
 
-    $user = new User([
-        'name' => $request->input('name'),
-        'email' => $request->input('email'),
-        'password' => bcrypt($request->input('password')),
-        'admin_key' => $request->input('admin_key'),
-        'role' => $request->input('role'),
-        // 'admin_id' => auth()->user()->id,
-    ]);
+        $request->merge(['password' => Hash::make($request->password)]);
+        $user = User::create($request->all());
 
-    // if ($user->save()) {
-    //     // Log success or additional information if needed
-    //     \Log::info('User saved successfully');
-    // } else {
-        // Log an error if the save operation fails
-    //     \Log::error('Failed to save user');
-    // }
+        return response()->json([
+            'status' => 'success',
+            'user' => $user,
+        ]);
+    }
+    public function rules()
+    {
+        $roles = ['Admin', 'Analyst', 'Manager'];
 
-    return response()->json([
-        'status' => 'success',
-    ]);
-}
+        return [
+            'name' => 'required|string|min:5',
+            'email' => 'required|email|unique:users|max:255',
+            'password' => 'required|min:5',
+            'admin_key' => 'required', // Add this line if admin_key is required
+            'role' => 'required|in:' . implode(',', $roles),
+        ];
+    }
 }

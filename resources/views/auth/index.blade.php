@@ -126,7 +126,7 @@
                             <!-- End: Modal for edit alert recipient -->
 
 
-                            <!-- Modal for add alert recipient -->
+                            <!-- Modal for add User -->
                             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -134,13 +134,13 @@
 
                                         <div class="modal-header">
                                             <h4 class="modal-title" id="exampleModalLongTitle"> Add New User </h4>
-                                            <button type="button" class="btn close" data-dismiss="modal"
+                                            <button type="button" class="btn btn-close" data-dismiss="modal"
                                                 aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
 
-                                        <form id="addNewUser">
+                                        <form id="addNewUser" action="{{ route('users.store') }}" method="post">
+                                            @csrf
                                             <div class="modal-body text-center">
                                                 <input class="form-control mb-4" type="text" name="name"
                                                     placeholder="Full Name" required>

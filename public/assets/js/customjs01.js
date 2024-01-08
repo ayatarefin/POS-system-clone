@@ -183,7 +183,7 @@ $("#addNewUser").on('submit',function(e){
     // Ajax call to store new user
     $.ajax({
         type:'POST',
-        url:'/users-store',
+        url: form.attr('action'),
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -193,15 +193,20 @@ $("#addNewUser").on('submit',function(e){
             $(".adduser-submit-btn").css({'display':'none'})
             $(".display-add-user").css({'display':'block'})
         },
-        success:function(user){
-            console.log(user);
-            if(user.status=='success'){
+        success: function (response) {
+            console.log(response);
+            if (response.status === 'success') {
                 $(".close-modal").click();
                 window.location.reload();
-            }else{
+            } else {
                 actionError('Error');
+                // Handle other error cases if needed
             }
-        }
+        },
+        error: function (xhr, status, error) {
+            console.error(xhr.responseText);
+            // Handle error cases
+        },
     });
 });
 
