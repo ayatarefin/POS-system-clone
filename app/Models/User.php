@@ -17,14 +17,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'admin_key',
-        'role',
-        'admin_id'
-    ];
+    protected $fillable = ['name', 'email', 'password', 'admin_key', 'role'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -46,8 +39,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function adminCreatedUsers()
-    {
-        return $this->hasMany(User::class, 'admin_id');
-    }
+    // public function adminCreatedUsers()
+    // {
+    //     return $this->hasMany(User::class, 'admin_id');
+    // }
 }

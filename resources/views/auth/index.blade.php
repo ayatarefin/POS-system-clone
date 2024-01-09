@@ -15,10 +15,8 @@
                         <div class="card-body table-responsive p-4">
 
                             <div class="d-sm-flex align-items-center mb-9">
-                                <button class="btn btn-success" data-toggle="modal" data-target="#exampleModal"> Add New
-                                    User </button>
+                                <a href="{{ route('users.create') }}" class="btn btn-success">Add New User</a>
                             </div>
-
                             <table class="table table-striped text-center">
                                 <thead>
                                     <tr class="table-primary">
@@ -127,16 +125,14 @@
 
 
                             <!-- Modal for add User -->
-                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                            {{-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
 
                                         <div class="modal-header">
-                                            <h4 class="modal-title" id="exampleModalLongTitle"> Add New User </h4>
-                                            <button type="button" class="btn btn-close" data-dismiss="modal"
-                                                aria-label="Close">
-                                            </button>
+                                            <h4 class="modal-title"> Add New User </h4>
+                                            <button type="button" class="btn btn-close" data-dismiss="modal" aria-label="Close"></button>
                                         </div>
 
                                         <form id="addNewUser" action="{{ route('users.store') }}" method="post">
@@ -152,25 +148,19 @@
                                                     placeholder="Admin Key" required>
                                                 <select class="form-select mb-4" name="role" placeholder="User Role" required>
                                                     @foreach ($roles as $row)
-                                                        <option value="{{ $row->role_name }}">{{ $row->role_name}}</option>
+                                                    <option value="{{ $row->role_name }}">{{ $row->role_name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-warning close-modal"
-                                                    data-dismiss="modal">Cancel</button>
-                                                <input type="submit" value="Save"
-                                                    class="btn btn-success adduser-submit-btn" />
-                                                <button class="btn btn-success display-add-user"
-                                                    style="display:none">
-                                                    <i class="fa fa-refresh fa-spin "></i>Loading
-                                                </button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-success display-add-user">Save</button>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- End: Modal for add alert recipient -->
+                            </div> --}}
+                            <!-- End: Modal for add user -->
 
 
                         </div>

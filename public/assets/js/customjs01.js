@@ -13,7 +13,7 @@ $(document).ready(function(){
     }
 
     // Call the dailySaleChart function
-    dailySaleChart();
+    // dailySaleChart();
 });
 
 // Function to display success message
@@ -176,39 +176,51 @@ searchCurrentStock = () => {
 // }
 
 // Event listener for the form with id "addNewUser"
-$("#addNewUser").on('submit',function(e){
-    e.preventDefault();
-    var form = $("#addNewUser");
+// $("#addNewUser").on('submit', function (e) {
+//     e.preventDefault();
+//     var form = $(this);
 
-    // Ajax call to store new user
-    $.ajax({
-        type:'POST',
-        url: form.attr('action'),
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        data:form.serialize(),
-        datatype:'JSON',
-        beforeSend:function(){
-            $(".adduser-submit-btn").css({'display':'none'})
-            $(".display-add-user").css({'display':'block'})
-        },
-        success: function (response) {
-            console.log(response);
-            if (response.status === 'success') {
-                $(".close-modal").click();
-                window.location.reload();
-            } else {
-                actionError('Error');
-                // Handle other error cases if needed
-            }
-        },
-        error: function (xhr, status, error) {
-            console.error(xhr.responseText);
-            // Handle error cases
-        },
-    });
-});
+//     // Ajax call to store new user
+//     $.ajax({
+//         type: 'POST',
+//         url: '/users-store',
+//         headers: {
+//             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//         },
+//         data: form.serialize(),
+//         dataType: 'JSON',
+//         beforeSend: function () {
+//             $(".adduser-submit-btn").css({ 'display': 'none' })
+//             $(".display-add-user").css({ 'display': 'block' })
+//         },
+//         success: function (response) {
+//             console.log('AJAX request successful:', response);
+//             if (response.status === 'success') {
+//                 $(".close-modal").click();
+//                 window.location.reload();
+//             }
+//             else {
+//                 actionError('Error');
+//                 // Handle other error cases if needed
+//             }
+//         },
+//         error: function (error) {
+//             console.log('AJAX request failed:', error.responseJSON);
+
+//             if (error.status === 422 && error.responseJSON.errors) {
+//                 // Handle validation errors
+//                 $.each(error.responseJSON.errors, function (key, value) {
+//                     // Display the error messages to the user or log them
+//                     console.log(key, value);
+//                     // You might want to show these errors in your UI
+//                 });
+//             } else {
+//                 // Handle other error cases if needed
+//                 actionError('Error');
+//             }
+//         },
+//     });
+// });
 
 // Function to open modal for editing alert receiver
 // openReceiverEditModal = (id) => {
@@ -414,41 +426,41 @@ recModalClose = () => {
 // }
 
 // Function to make periodic Ajax call for SMS alerts
-function ajaxCallForSMS() {
-    $.ajax({
-    url:"/api/store-alert",
-    type:"get",
-    //headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-    data:{
-    },
-    datatype:"JSON",
-    success:function(data){
-        console.log(data);
-    },
-    }).always(function() {
-        setTimeout(ajaxCallForSMS, 60000); // 6 sec
-    });
-}
-ajaxCallForSMS(); // Initial call
+// function ajaxCallForSMS() {
+//     $.ajax({
+//     url:"/api/store-alert",
+//     type:"get",
+//     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+//     data:{
+//     },
+//     datatype:"JSON",
+//     success:function(data){
+//         console.log(data);
+//     },
+//     }).always(function() {
+//         setTimeout(ajaxCallForSMS, 60000); // 6 sec
+//     });
+// }
+// ajaxCallForSMS(); // Initial call
 
 // Function to make another periodic Ajax call for SMS alerts
-function ajaxCallForSMSStore() {
-    $.ajax({
-    url:"/api/store-alert2",
-    type:"get",
-    //headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-    data:{
-    },
-    datatype:"JSON",
-    success:function(data){
-        console.log(data);
-    },
-    }).always(function() {
-        setTimeout(ajaxCallForSMSStore, 60000); // 6 sec
-    });
-}
+// function ajaxCallForSMSStore() {
+//     $.ajax({
+//     url:"/api/store-alert2",
+//     type:"get",
+//     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+//     data:{
+//     },
+//     datatype:"JSON",
+//     success:function(data){
+//         console.log(data);
+//     },
+//     }).always(function() {
+//         setTimeout(ajaxCallForSMSStore, 60000); // 6 sec
+//     });
+// }
 
-ajaxCallForSMSStore(); // Initial call
+// ajaxCallForSMSStore(); // Initial call
 //send message function call//
 // function itemQuantityFromApi(){
 //     $.ajax({

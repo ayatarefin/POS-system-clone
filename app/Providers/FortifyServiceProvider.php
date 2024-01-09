@@ -29,9 +29,9 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
         // Custom Registration fortify
-        Fortify::registerView(function () {
-            return view('auth.register');
-        });
+        // Fortify::registerView(function () {
+        //     return view('auth.register');
+        // });
     }
 
     /**
