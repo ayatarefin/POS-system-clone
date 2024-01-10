@@ -20,19 +20,16 @@ class FortifyServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
-    public function register()
-    {
-        // custom login fortify
-        Fortify::loginView(function () {
-            $roles = DB::table('users_role')->get();
-            return view('auth.login', ['roles' => $roles]);
-        });
+    // public function register()
+    // {
+    //     // custom login fortify
 
-        // Custom Registration fortify
-        // Fortify::registerView(function () {
-        //     return view('auth.register');
-        // });
-    }
+
+    //     // Custom Registration fortify
+    //     Fortify::registerView(function () {
+    //         return view('auth.register');
+    //     });
+    // }
 
     /**
      * Bootstrap any application services.
@@ -43,6 +40,11 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
+
+        Fortify::loginView(function () {
+            $roles = DB::table('users_role')->get();
+            return view('auth.login', ['roles' => $roles]);
+        });
 
         Fortify::authenticateUsing(function (Request $request) {
             $credentials = $request->only('email', 'password');

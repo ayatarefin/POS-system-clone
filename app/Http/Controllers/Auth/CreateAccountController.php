@@ -1,11 +1,19 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
+
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use DB;
+use Laravel\Fortify\Contracts\RegisterResponse;
+use Laravel\Fortify\Fortify;
+use Illuminate\Support\Str;
+use Illuminate\Auth\Events\Registered;
+
+
+
 
 class CreateAccountController extends Controller
 {
@@ -13,56 +21,30 @@ class CreateAccountController extends Controller
     {
         $users = User::get();
         $roles = DB::table('users_role')->get();
-        return view('auth.index',compact('users'),['roles' => $roles]);
+        return view('auth.index', compact('users'), ['roles' => $roles]);
     }
     public function create(Request $request)
     {
-        $users = User::get();
         $roles = DB::table('users_role')->get();
-        return view('auth.create', compact('users', 'roles'));
+        return view('auth.create', ['roles' => $roles]);
     }
+
     public function store(Request $request)
-{
-    // Assuming only admins can create new user profiles
-    $adminRole = 'admin';
+    {
+        // Assuming only admins can create new user profiles
+        if (config('fortify.lowercase_usernames')) {
+            $request->merge([
+                Fortify::username() => Str::lower($request->{Fortify::username()}),
+            ]);
+        }
 
-    // Check if the logged-in user has the admin role
-    if (auth()->user() && auth()->user()->admin_role === $adminRole) {
-        $validatedData = $request->validate([
-            'name' => 'required|string|min:5',
-            'email' => 'required|email|unique:users|max:255',
-            'password' => 'required|min:5',
-            'admin_key' => 'required|in:9y$10/KcQvrB8AI3avTA',
-            'admin_role' => 'required|in:' . $adminRole,
-        ]);
+        // Use Fortify's CreateNewUser class
+        $creator = app(config('fortify.providers.users.model'));
+        event(new Registered($user = $creator->create($request->all())));
 
-        $users = User::create([
-            'name' => $validatedData['name'],
-            'email' => $validatedData['email'],
-            'password' => Hash::make($validatedData['password']),
-            'admin_key' => $validatedData['admin_key'],
-            'admin_role' => $adminRole,
-        ]);
+        $this->guard->login($user);
 
-        return redirect()->back()->with('success', 'Successfully Registered');
+        return app(RegisterResponse::class);
     }
-
-    return redirect()->back()->with('error', 'Unauthorized to create new user profiles');
-}
-
-
-
-    // public function rules()
-    // {
-    //     $roles = DB::table('users_role')->pluck('role_name')->toArray();
-
-    //     return [
-    //         'name' => 'required|string|min:5',
-    //         'email' => 'required|email|unique:users|max:255',
-    //         'password' => 'required|min:5',
-    //         'admin_key' => 'required|in:9y$10/KcQvrB8AI3avTA',
-    //         'admin_role' => 'required|in:' . implode(',', $roles),
-    //     ];
-    // }
 
 }

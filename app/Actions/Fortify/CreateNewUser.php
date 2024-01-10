@@ -29,12 +29,16 @@ class CreateNewUser implements CreatesNewUsers
                 Rule::unique(User::class),
             ],
             'password' => $this->passwordRules(),
+            'admin_key' => ['required', 'string'], // Add validation for admin_key
+            'admin_role' => ['required', 'string'], // Add validation for admin_role
         ])->validate();
 
         return User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
+            'admin_key' => $input['admin_key'], // Save admin_key
+            'admin_role' => $input['admin_role'], // Save admin_role
         ]);
     }
 }
