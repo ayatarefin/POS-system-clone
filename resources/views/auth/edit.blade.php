@@ -7,14 +7,16 @@
             margin: 0 auto;
         }
     </style>
+<body>
 
     <div class="container mt-4">
         <div class="card mb-4 small-card">
             <div class="card-header">
-                <h4>Add New User</h4>
+                <h4>Edit User</h4>
             </div>
             <div class="card-body">
-                <form id="addNewUser" action="{{ route('users.store') }}" method="post">
+                <form action="{{ route('users.update', ['user' => $user->id]) }}" method="POST">
+                    @method('PUT')
                     @csrf
                     <div class="form-group">
                         <label for="name" class="form-label">Full Name</label>
@@ -27,14 +29,6 @@
                     <div class="form-group">
                         <label for="password" class="form-label">Set Password</label>
                         <input class="form-control" type="password" name="user_password" id="user_password" placeholder="Set Password" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="admin_key" class="form-label">Admin Key</label>
-                        <input class="form-control" type="text" name="admin_key" id="admin_key" placeholder="Admin Key" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="admin_role" class="form-label">User Role</label>
-                        <input class="form-control" type="text" name="admin_role" id="admin_role" placeholder="Admin Role" required>
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-success display-add-user">Save</button>

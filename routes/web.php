@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\StockReportController;
 use App\Http\Controllers\Auth\CreateAccountController;
+use App\Http\Controllers\Auth\RegisterUser;
 use App\Http\Middleware\CheckSessionExpiration;
 
 /*
@@ -16,6 +17,8 @@ use App\Http\Middleware\CheckSessionExpiration;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+// Auth::routes(['register' => false]);
 
 //__Login & Logout__//
 Route::get('/', function () {
@@ -41,11 +44,8 @@ Route::get('/stock-reports', [StockReportController::class, 'currentStock'])->na
 //keepAlive
 // Route::get('/keep-alive', [StockReportController::class,'keepAlive']);
 
-//Create Account
-Route::get('/users-index',[CreateAccountController::class,'index'])->name('users.index');
-Route::get('/users-create', [CreateAccountController::class, 'create'])->name('users.create');
-Route::post('/users-store', [CreateAccountController::class, 'store'])->name('users.store');
-
-Route::post('/edit/alert-receiver',[CreateAccountController::class,'editAlertReceiver']);
-Route::post('/edit-store/alert-receiver',[CreateAccountController::class,'editStoreAlertReceiver']);
-Route::post('/reciever-delete/{id}',[CreateAccountController::class,'deleteAlertReciver']);
+//Register New User
+Route::resource('users', RegisterUser::class);
+// Route::get('user-edit/{user_id}',RegisterUser::class,'user_edit');
+// Route::post('user-update/',RegisterUser::class,'update');
+// Route::get('user-delete/{user_id}',RegisterController,'user_delete');

@@ -48,31 +48,9 @@
                                         <td>{{$data->name}}</td>
                                         <td>{{$data->email}}</td>
                                         <td>{{$data->admin_role}}</td>
-                                        {{-- <td>
-                                            <label class="switch">
-                                                <input type="checkbox" checked
-                                                    onclick="alertRecieverDisable({{$data->id}})" />
-                                                <span class="slider"></span>
-                                            </label>
-                                        </td> --}}
-                                        {{-- @else
                                         <td>
-                                            <label class="switch">
-                                                <input type="checkbox" onclick="alertRecieverEnable({{$data->id}})">
-                                                <span class="slider"></span>
-                                            </label>
+                                        <a href="{{ route('users.edit',$data->id) }}"><i class="fa fa-edit btn btn-sm btn-success" aria-hidden="true"></i></a>
                                         </td>
-                                        @endif
-                                        <td>
-                                            <button type="button" class="btn btn-sm btn-primary" onclick="openReceiverEditModal({{$data->id}})"> Edit </button>
-                                            <form action="{{url('/')}}/reciever-delete/{{$data->id}}" method="post">
-                                                @csrf
-                                                <button class="btn btn-sm btn-danger" type="submit"
-                                                    onclick="return confirm('Are you sure to delete it ?')"> Delete
-                                                </button>
-                                            </form>
-
-                                        </td> --}}
                                     </tr>
                                     @endforeach
                                 </tbody>
