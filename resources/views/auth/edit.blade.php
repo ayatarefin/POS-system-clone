@@ -7,8 +7,6 @@
             margin: 0 auto;
         }
     </style>
-<body>
-
     <div class="container mt-4">
         <div class="card mb-4 small-card">
             <div class="card-header">
@@ -19,15 +17,15 @@
                     @method('PUT')
                     @csrf
                     <div class="form-group">
-                        <label for="name" class="form-label">Full Name</label>
-                        <input class="form-control" type="text" name="user_name" id="user_name" placeholder="Full Name" required>
+                        <label for="user_name" class="form-label">Full Name</label>
+                        <input class="form-control" type="text" name="user_name" id="user_name" placeholder="Full Name" value="{{ old('user_name', $user->name) }}" required>
                     </div>
                     <div class="form-group">
-                        <label for="email" class="form-label">Email</label>
-                        <input class="form-control" type="email" name="user_email" id="user_email" placeholder="Email" aria-describedby="emailHelp" required>
+                        <label for="user_email" class="form-label">Email</label>
+                        <input class="form-control" type="email" name="user_email" id="user_email" placeholder="Email" value="{{ old('user_email', $user->email) }}" aria-describedby="emailHelp" required>
                     </div>
                     <div class="form-group">
-                        <label for="password" class="form-label">Set Password</label>
+                        <label for="user_password" class="form-label">Set Password</label>
                         <input class="form-control" type="password" name="user_password" id="user_password" placeholder="Set Password" required>
                     </div>
                     <div class="text-center">

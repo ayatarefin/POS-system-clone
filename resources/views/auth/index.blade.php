@@ -20,7 +20,7 @@
                             <table class="table table-striped text-center">
                                 <thead>
                                     <tr class="table-primary">
-                                        <th width="5%">
+                                        <th width="15%">
                                             <label for=""> SL </label>
                                         </th>
 
@@ -49,7 +49,14 @@
                                         <td>{{$data->email}}</td>
                                         <td>{{$data->admin_role}}</td>
                                         <td>
-                                        <a href="{{ route('users.edit',$data->id) }}"><i class="fa fa-edit btn btn-sm btn-success" aria-hidden="true"></i></a>
+                                            <div class="d-sm-flex align-items-center mb-6">
+                                                <a href="{{ route('users.edit', $data->id) }}" class="btn btn-sm btn-success">Edit</a>
+                                                <form action="{{ route('users.destroy', $data->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete?')">Delete</button>
+                                                </form>
+                                            </div>
                                         </td>
                                     </tr>
                                     @endforeach

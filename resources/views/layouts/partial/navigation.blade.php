@@ -5,7 +5,7 @@
     <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
         <div class="brand-logo d-flex align-items-center justify-content-between mt-3">
             <a class="text-nowrap logo-img">
-                <img src="../images/logos/logo.webp" width="130" height="auto" alt="BnB Logo">
+                <img src="{{ asset('images/logos/logo.webp') }}" alt="">
             </a>
         </div>
         <ul id="sidebarnav mt-2">

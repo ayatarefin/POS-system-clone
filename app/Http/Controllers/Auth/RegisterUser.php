@@ -14,18 +14,17 @@ class RegisterUser extends Controller
     public function index()
     {
         $users = User::get();
-        // $roles = DB::table('users_role')->get();
+        $roles = UserRole::get();
         return view('auth.index', compact('users'));
     }
     public function create()
     {
-        // $roles = DB::table('users_role')->get();
-        return view('auth.create');
+        $roles = UserRole::get();
+        return view('auth.create',compact('roles'));
     }
     public function store(Request $request)
     {
         // Validate request data
-
         $user = User::create([
             'name' => $request->input('user_name'),
             'email' => $request->input('user_email'),
@@ -47,16 +46,16 @@ class RegisterUser extends Controller
     }
     public function edit(string $id)
     {
-        $user = User::find($id);
+        $user = User::where('id',$id)->first();
         $roles = UserRole::get();
         return view('auth.edit', compact('user', 'roles'));
     }
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required|min:3|max:50',
-            'email' => 'email',
-            'password' => 'nullable|confirmed|min:6',
+            'user_name' => 'required|min:3|max:50',
+            'user_email' => 'required|email|unique:users,email,' . $id,
+            'user_password' => 'nullable|min:6|confirmed',
         ]);
 
         // Retrieve the user model
@@ -71,13 +70,13 @@ class RegisterUser extends Controller
         $user->email = $request->input('user_email');
 
         // Update password only if provided
-        if ($request->filled('password')) {
+        if ($request->filled('user_password')) {
             $user->password = Hash::make($request->input('user_password'));
         }
 
         // Save the updated user
         if ($user->save()) {
-            return redirect()->route('users')->with('success', 'User Information Updated Successfully');
+            return redirect()->route('users.index')->with('success', 'User Information Updated Successfully');
         } else {
             return redirect()->back()->with('error', 'Oops, something went wrong!');
         }
@@ -88,11 +87,15 @@ class RegisterUser extends Controller
      */
     public function destroy(string $id)
     {
-        $user_delete = User::where('id', $user_id)->delete();
-        if ($user_delete) {
-            return redirect()->back();
-        } else {
-            return redirect()->back();
+        $user = User::find($id);
+
+        if (!$user) {
+            abort(404, 'User not found');
         }
+
+        $user->delete();
+
+        return redirect()->route('users.index')->with('success', 'User deleted successfully');
     }
+
 }

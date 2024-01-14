@@ -34,7 +34,11 @@
                     </div>
                     <div class="form-group">
                         <label for="admin_role" class="form-label">User Role</label>
-                        <input class="form-control" type="text" name="admin_role" id="admin_role" placeholder="Admin Role" required>
+                        <select class="form-control" name="admin_role" id="admin_role" required>
+                            @foreach ($roles as $row)
+                                <option value="{{ $row->role_name }}">{{ $row->role_name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-success display-add-user">Save</button>

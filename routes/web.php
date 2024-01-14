@@ -23,7 +23,7 @@ use App\Http\Middleware\CheckSessionExpiration;
 //__Login & Logout__//
 Route::get('/', function () {
     return view('dashboard');
-})->middleware(['auth', CheckSessionExpiration::class])->name('dashboard');
+})->middleware(['auth', CheckSessionExpiration::class]);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
