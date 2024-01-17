@@ -21,9 +21,11 @@ use App\Http\Middleware\CheckSessionExpiration;
 // Auth::routes(['register' => false]);
 
 //__Login & Logout__//
+
 Route::get('/', function () {
     return view('dashboard');
 })->middleware(['auth', CheckSessionExpiration::class]);
+// Route::get('password-edit',RegisterUser::class,'user_edit');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

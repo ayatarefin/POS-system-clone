@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\StockRecord;
+use App\Models\SaleRecord;
 use App\Models\AllItems;
 use App\Models\Outlets;
 use DB;
@@ -34,8 +35,7 @@ class StockReportController extends Controller
                 // 'id' => $data->id,
                 'outlet' => $data->outlet_name,
                 'item' => $data->item_name,
-                'stock' => $data->stock_receive_qty,
-                'sale' => $data->sale_qty,
+                'stock' => $data->stock_quantity,
                 'date' => $data->date,
             ];
         }
@@ -46,9 +46,36 @@ class StockReportController extends Controller
         ]);
     }
 
-    // function keepAlive()
-    // {
-        //updating the session timestamp
-    //     return response()->json(['status' => 'success']);
-    // }
+        ///function for chart
+        function productSaleChart(Request $request){
+            $fromdate = $request->fromdate;
+            $todate = $request->todate;
+
+            $stock = StockRecord::whereBetween('date', [$fromdate, $todate])
+                ->distinct()
+                ->take(850)
+                ->get();
+            $sale = SaleRecord::whereBetween('datetime', [$fromdate, $todate])
+                ->distinct()
+                ->take(850)
+                ->get();
+
+
+            $diff = abs(strtotime($todate) - strtotime($fromdate));
+            $years = floor($diff / (365*60*60*24));
+            $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+            $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+            $arrStock = [];
+            $arrSale = [];
+            foreach($stock as $data){
+                array_push($arrStock,$data->stock_quantity);
+            }
+            foreach($sale as $data){
+                array_push($arrSale,$data->sale_qty);
+            }
+            return view('dashboard', [
+                'arrSale' => $arrSale,
+                'arrStock' => $arrStock,
+            ]);
+        }
 }
