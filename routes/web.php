@@ -51,3 +51,7 @@ Route::resource('users', RegisterUser::class);
 // Route::get('user-edit/{user_id}',RegisterUser::class,'user_edit');
 // Route::post('user-update/',RegisterUser::class,'update');
 // Route::get('user-delete/{user_id}',RegisterController,'user_delete');
+
+
+Route::get('/fetch-chart-data', [StockReportController::class, 'fetchChartData']);
+

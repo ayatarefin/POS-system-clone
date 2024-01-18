@@ -9,5 +9,5 @@ class StockRecord extends Model
 {
     use HasFactory;
 
-    protected $table = "stock_record";
+    protected $table = "api_stocks";
 }

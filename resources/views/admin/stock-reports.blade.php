@@ -19,7 +19,7 @@
                                             <label for="todate"> From Date </label>
                                         </th>
                                         <th width="20%">
-                                            <label for="todate"> To Date </label>
+                                            <label for="datetime"> To Date </label>
                                         </th>
                                         <th width="20%">
                                             <label for="outlet"> Outlet Name</label>
@@ -43,17 +43,17 @@
                                         <td>
                                             <select style="width:80%" class="form-select-sm" name="outletName" id="outletName" required>
                                                 <option value="" selected disabled>Select Outlet</option>
-                                                <?php foreach ($outlets as $outlet) : ?>
-                                                    <option value="<?= $outlet ?>"><?= $outlet ?></option>
-                                                <?php endforeach; ?>
+                                                @foreach ($outlets as $data)
+                                                    <option value="{{ $data->outlet_name }}">{{ $data->outlet_name }}</option>
+                                                @endforeach
                                             </select>
                                         </td>
                                         <td>
                                             <select style="width:80%" class="form-select-sm" name="itemName" id="itemName">
                                                 <option value="" selected disabled>Select Product</option>
-                                                <?php foreach ($items as $item) : ?>
-                                                    <option value="<?= $item ?>"><?= $item ?></option>
-                                                <?php endforeach; ?>
+                                                @foreach ($items as $data)
+                                                    <option value="{{ $data->item_name }}">{{ $data->item_name }}</option>
+                                                @endforeach
                                             </select>
                                         </td>
                                         <td>

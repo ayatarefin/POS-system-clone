@@ -11,9 +11,6 @@ $(document).ready(function(){
     } else {
         // Do nothing if the value is neither 200 nor 401
     }
-
-    // Call the dailySaleChart function
-    // dailySaleChart();
 });
 
 // Function to display success message
@@ -265,9 +262,9 @@ searchCurrentStock = () => {
 // }
 
 // Function to close the modal
-recModalClose = () => {
-    $("#exampleModalCenter").modal('hide');
-}
+// recModalClose = () => {
+//     $("#exampleModalCenter").modal('hide');
+// }
 
 // Event listener for the form with id "editAlertReceiver"
 // $("#editAlertReceiver").on('submit',function(e){
@@ -481,9 +478,9 @@ recModalClose = () => {
 
 
 // Refresh the page
-setTimeout(function () {
-    location.reload();
-}, 28800000);
+// setTimeout(function () {
+//     location.reload();
+// }, 28800000);
 
 //keep-alive.js
 

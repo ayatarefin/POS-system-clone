@@ -52,15 +52,15 @@
                 </a>
             </li>
 
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="" aria-expanded="false">
+            {{-- <li class="sidebar-item">
+                <a class="sidebar-link" href="" aria-expanded="false"> --}}
                     {{-- {{route('alertReceiver')}} --}}
-                    <span>
+                    {{-- <span>
                         <i class="ti ti-file-description"></i>
                     </span>
                     <span class="hide-menu">Alert Receiver</span>
                 </a>
-            </li>
+            </li> --}}
 
             <li class="nav-small-cap">
                 <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
