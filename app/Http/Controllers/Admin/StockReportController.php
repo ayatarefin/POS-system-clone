@@ -48,65 +48,44 @@ function searchStock(Request $request){
         ]);
 
     }
+    public function productSaleChart(Request $request) {
+        $fromdate = $request->fromdate;
+        $todate = $request->todate;
 
-        ///function for chart
-        function productSaleChart(Request $request){
-            $fromdate = $request->fromdate;
-            $todate = $request->todate;
+        // Fetch records from the StockRecord table based on the date range
+        $records = StockRecord::whereBetween('date', [$fromdate, $todate])->get();
 
-            $stock = StockRecord::whereBetween('date', [$fromdate, $todate])
-                ->distinct()
-                ->take(850)
-                ->get();
-            $sale = SaleRecord::whereBetween('datetime', [$fromdate, $todate])
-                ->distinct()
-                ->take(850)
-                ->get();
+        // Calculate total sale quantity
+        $totalSale = $records->sum('sale_qty');
 
+        // Pass the calculated values and records to the view
+        return view('dashboard', [
+            'totalSale' => $totalSale,
+            'stockRecords' => $records, // You can pass all records if needed
+        ]);
+    }
 
-            $diff = abs(strtotime($todate) - strtotime($fromdate));
-            $years = floor($diff / (365*60*60*24));
-            $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
-            $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
-            $arrStock = [];
-            $arrSale = [];
-            foreach($stock as $data){
-                array_push($arrStock,$data->stock_quantity);
-            }
-            foreach($sale as $data){
-                array_push($arrSale,$data->sale_qty);
-            }
-            return view('dashboard', [
-                'arrSale' => $arrSale,
-                'arrStock' => $arrStock,
-            ]);
-        }
-        public function fetchChartData(Request $request)
-        {
-            $fromdate = $request->input('fromdate');
-            $todate = $request->input('todate');
+    public function fetchChartData(Request $request) {
+        // Assuming you have the necessary validations in place
 
-            $stock = StockRecord::whereBetween('date', [$fromdate, $todate])->get();
-            $sale = SaleRecord::whereBetween('datetime', [$fromdate, $todate])->get();
+        $fromDate = $request->input('fromdate');
+        $toDate = $request->input('todate');
+        $itemName = $request->input('itemName');
 
-            // ... Similar data preparation logic as in your existing method\
+        // Fetch data from the StockRecord table based on the criteria
+        $chartData = StockRecord::select(DB::raw('SUM(sale_qty) as totalSale'), 'date')
+            ->where('item_name', $itemName)
+            ->whereBetween('date', [$fromDate, $toDate])
+            ->groupBy('date')
+            ->get();
 
-            $diff = abs(strtotime($todate) - strtotime($fromdate));
-            $years = floor($diff / (365*60*60*24));
-            $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
-            $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
-            $arrStock = [];
-            $arrSale = [];
-            foreach($stock as $data){
-                array_push($arrStock,$data->stock_quantity);
-            }
-            foreach($sale as $data){
-                array_push($arrSale,$data->sale_qty);
-            }
+        // Prepare the data for the chart
+        $arrSale = $chartData->pluck('totalSale')->toArray();
+        $dates = $chartData->pluck('date')->toArray();
 
-            return response()->json([
-                'arrSale' => $arrSale,
-                'arrStock' => $arrStock,
-            ]);
-        }
+        return response()->json([
+            'dates' => $dates,
+            'saleQty' => $arrSale,
+        ]);
+    }
 }

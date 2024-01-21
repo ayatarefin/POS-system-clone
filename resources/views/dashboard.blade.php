@@ -21,24 +21,22 @@
                                         <h2 class="card-title fw-semibold">Product Sale Chart</h2>
                                     </div>
                                     <div>
-                                        @php $items = DB::table('all_items')->get();@endphp
+                                        @php $items = \App\Models\StockRecord::select('item_name')->groupBy('item_name')->get();@endphp
                                     </div>
                                 </div>
 
                                 <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
                                     <div class="row col-md-12">
                                         <div class="col-md-3">
-                                            <label>From Date</label>
-                                            <input value="{{ date('Y-m-01') }}" type="date" name="datetime"
-                                                class="form-control" />
+                                            <label for="fromDate">From Date:</label>
+                                            <input value="{{ date('Y-m-01') }}" type="date" name="datetime" id="fromDate" class="form-control" />
                                         </div>
                                         <div class="col-md-3">
-                                            <label>To Date</label>
-                                            <input id="actionPerform" value="{{ date('Y-m-d') }}" type="date"
-                                                name="todatetime" class="form-control" />
+                                            <label for="toDate">To Date:</label>
+                                            <input id="toDate" value="{{ date('Y-m-d') }}" type="date" name="todatetime" class="form-control" />
                                         </div>
                                         <div class="col-md-3">
-                                            <label>Product Name</label>
+                                            <label for="itemName">Product Name</label>
                                             <select class="form-select" name="itemName" id="itemName">
                                                 <option value="" selected disabled>Select</option>
                                                 @foreach ($items as $data)
@@ -47,13 +45,11 @@
                                             </select>
                                         </div>
                                         <div class="col mt-4">
-                                            <button class="btn btn-success" type="button"
-                                                onclick="dailySaleChart()"><i class="ti-bar-chart"></i> Submit
-                                            </button>
+                                            <button class="btn btn-success" type="button" id="generateChart"><i class="ti-bar-chart"></i>Generate Chart</button>
                                         </div>
                                     </div>
                                 </div>
-                                <div id="chart">
+                                <div id="chart"></div>
                                 </div>
                             </div>
                         </div>

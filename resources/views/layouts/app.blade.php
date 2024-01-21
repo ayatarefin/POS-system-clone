@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="{{ asset('assets/css/mystyles.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/toastr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
 
@@ -47,10 +46,10 @@
 <script src="{{ asset('assets/js/customjs01.js') }}"></script>
 <script src="{{ asset('assets/js/toastr.min.js') }}"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="{{ asset('assets/js/toastr.min.js') }}"></script>
 </body>
 </html>
