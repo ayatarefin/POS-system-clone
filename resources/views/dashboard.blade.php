@@ -54,27 +54,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
-
-                {{-- <div class="row">
-                <div class="col-lg-12 d-flex align-items-stretch">
-                    <div class="card w-100">
-                        <div class="card-body p-4">
-                            <div class="mb-4">
-                                <h3 class="card-title fw-semibold">Recent Alerts</h3>
-                            </div> --}}
-                {{-- @php $alerts = App\Models\Alert::where('Status',1)->orderBy('SN','DESC')->take(5)->get();
-                            @endphp
-                            @foreach ($alerts as $alert)
-                            <div class="alert alert-success text-center">{{$alert->Message}} at {{date('h:i
-                                A',strtotime($alert->Datetime.'+6 hours'))}}</div>
-                            @endforeach --}}
-                {{-- </div>
-                    </div>
-                </div>
-            </div> --}}
-
             </div>
         </div>
     </div>

@@ -1,14 +1,17 @@
-<aside class="left-sidebar fixed-sidebar">
+<aside class="left-sidebar">
     <!-- Sidebar Start -->
     <!-- Sidebar navigation-->
-
-    <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
-        <div class="brand-logo d-flex align-items-center justify-content-between mt-3">
+    <div>
+        <div class="brand-logo d-flex align-items-center justify-content-between">
             <a class="text-nowrap logo-img">
                 <img src="../images/logos/logo.webp" width="130" height="auto" alt="BnB Logo">
             </a>
+            <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+                <i class="ti ti-x fs-8"></i>
+            </div>
         </div>
-        <ul id="sidebarnav mt-2">
+    <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+        <ul id="sidebarnav">
             <li class="sidebar-item">
                 <a class="sidebar-link" href="{{route('dashboard')}}" aria-expanded="false">
                     <span>
@@ -33,7 +36,7 @@
             </li>
 
             <li class="sidebar-item">
-                <a class="sidebar-link" href="" aria-expanded="false">
+                <a class="sidebar-link" href="#" aria-expanded="false">
                     {{-- {{route('alertMessage')}} --}}
                     <span>
                         <i class="ti ti-alert-circle"></i>
@@ -43,7 +46,7 @@
             </li>
 
             <li class="sidebar-item">
-                <a class="sidebar-link" href="" aria-expanded="false">
+                <a class="sidebar-link" href="#" aria-expanded="false">
                     {{-- {{route('alertSystem')}} --}}
                     <span>
                         <i class="ti ti-cards"></i>
@@ -53,7 +56,7 @@
             </li>
 
             <li class="sidebar-item">
-                <a class="sidebar-link" href="" aria-expanded="false">
+                <a class="sidebar-link" href="#" aria-expanded="false">
                     {{-- {{route('alertReceiver')}} --}}
                     <span>
                         <i class="ti ti-file-description"></i>
@@ -86,4 +89,5 @@
             </li>
         </ul>
     </nav><!-- End Sidebar navigation -->
+</div>
 </aside><!--  Sidebar End -->

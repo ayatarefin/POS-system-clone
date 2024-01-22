@@ -137,12 +137,16 @@ $(function () {
 
         salesChart.render();
     }
-
+    $("#generateChart").on("click", function () {
+        dailySaleChart();
+    });
     // Call the dailySaleChart function
     dailySaleChart = () => {
         var datetime = $("input[name='datetime']").val();
         var todatetime = $("input[name='todatetime']").val();
         var itemName = $("select[name='itemName']").val();
+
+
 
         // Validation checks (if needed)
 
