@@ -53,5 +53,5 @@ Route::resource('users', RegisterUser::class);
 // Route::get('user-delete/{user_id}',RegisterController,'user_delete');
 
 
+Route::get('/dashboard', [StockReportController::class, 'productSaleChart']);
 Route::get('/fetch-chart-data', [StockReportController::class, 'fetchChartData']);
-

@@ -5,9 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\StockRecord;
-use App\Models\SaleRecord;
-use App\Models\AllItems;
-use App\Models\Outlets;
 use DB;
 class StockReportController extends Controller
 {
@@ -80,12 +77,26 @@ function searchStock(Request $request){
             ->get();
 
         // Prepare the data for the chart
-        $arrSale = $chartData->pluck('totalSale')->toArray();
-        $dates = $chartData->pluck('date')->toArray();
+        $outlets = $chartData->pluck('outlet_name')->unique();
+        $dates = $chartData->pluck('date')->unique();
+
+        $data = [];
+        $cumulativeTotals = [];
+
+        foreach ($dates as $date) {
+            $dailyTotals = [];
+            foreach ($outlets as $outlet) {
+                $totalSale = $chartData->where('date', $date)->where('outlet_name', $outlet)->sum('totalSale');
+                $dailyTotals[] = $totalSale;
+            }
+
+            $cumulativeTotals[] = array_sum($dailyTotals);
+        }
 
         return response()->json([
             'dates' => $dates,
-            'saleQty' => $arrSale,
+            'cumulativeTotals' => $cumulativeTotals,
         ]);
     }
+
 }
